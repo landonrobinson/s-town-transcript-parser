@@ -2,7 +2,7 @@
 import csv 
 
 # Global Variables
-episodes = ["chapter6"]
+episodes = ["episodes/chapter1"]
 #episodes = ["chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7"]
 
 # Parses the web HTML of an episode transcript of S-Town
@@ -128,10 +128,10 @@ def line_adjuster(lines):
 					last_dialog = split_last_line[0]
 					adjusted_lines.append([count, speaker, last_dialog])
 
-				if "[MUSIC - "A ROSE FOR EMILY" BY THE ZOMBIES]" in new_line:
-					split_last_line = new_line.split()
-					last_dialog = split_last_line[0]
-					adjusted_lines.append([count, speaker, last_dialog])
+				# if "[MUSIC - "A ROSE FOR EMILY" BY THE ZOMBIES]" in new_line:
+				# 	split_last_line = new_line.split()
+				# 	last_dialog = split_last_line[0]
+				# 	adjusted_lines.append([count, speaker, last_dialog])
 		# if any line in between
 		else:
 
