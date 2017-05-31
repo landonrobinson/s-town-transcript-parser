@@ -2,10 +2,9 @@
 import csv 
 
 # Global Variables
-episodes = ["episodes/chapter7"]
-#episodes = ["chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7"]
+episodes = ["chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7"]
 
-# Parses the web HTML of an episode transcript of S-Town
+# Parses the web HTML of an episode transcript of S-Town (stored in 'episodes/' folder)
 def parse_episode(episode):
 
 	# First get all the lines
@@ -76,6 +75,7 @@ def parse_episode(episode):
 							nextLineisItalicTitleEnd = True
 	return lines
 
+# Denormalizes lines when speaker continuously speaks.
 def line_adjuster(lines):
 	adjusted_lines = []
 	stream_of_consciousness = []
@@ -181,8 +181,6 @@ def line_adjuster(lines):
 		# 	print line
 	return adjusted_lines
 
-
-
 # Takes Lines Object Returns Counts of Unique Words Within
 def count_words(episode_lines):
 	wordCounts = {}
@@ -200,22 +198,19 @@ def count_words(episode_lines):
 	wc = sorted(wordCounts.items(),key=lambda (word, count): count,reverse=True)
 
 # -- START -- #
+seasonLineCount=0
 for episode in episodes:
-	lines = parse_episode(episode)
-	# for line in lines:
-	# 	print line
+	lines = parse_episode("episodes/"+ episode)
 
-clean_lines = line_adjuster(lines)
+	clean_lines = line_adjuster(lines)
 
-for line in clean_lines:
-	print line, "\n"
+	for line in clean_lines:
+		print line, "\n"
+		seasonLineCount+=1
 
-# for line in clean_lines:
-# 	print line
+print "Total Lines of Dialog: ", seasonLineCount
 
-# for line in clean_lines:
-# 	print line
-
+# NLP Functions (coming soon)
 # print "finding top 10 words..."
 # topWords = []
 # topWordsAndValues=[]
