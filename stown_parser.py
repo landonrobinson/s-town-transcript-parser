@@ -1,10 +1,16 @@
-# Imports
-import csv 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+# stown_parser.py
+# 
+# Parses the HTML transcripts of the S-Town Podcast episodes from the 
+# website of S-Town.
+#
+# Authored by Landon Robinson, 2017-05-31
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
 # Global Variables
 episodes = ["chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7"]
 
-# Parses the web HTML of an episode transcript of S-Town (stored in 'episodes/' folder)
+# Parses HTML of an episode transcript (stored in 'episodes/' folder)
 def parse_episode(episode):
 
 	# First get all the lines
@@ -75,7 +81,7 @@ def parse_episode(episode):
 							nextLineisItalicTitleEnd = True
 	return lines
 
-# Denormalizes lines when speaker continuously speaks.
+# Denormalizes lines when speaker continuously speaks (used on output of parse_episode())
 def line_adjuster(lines):
 	adjusted_lines = []
 	stream_of_consciousness = []
@@ -181,22 +187,6 @@ def line_adjuster(lines):
 		# 	print line
 	return adjusted_lines
 
-# Takes Lines Object Returns Counts of Unique Words Within
-def count_words(episode_lines):
-	wordCounts = {}
-	# filter out stopwords
-	for line in lines:
-		tokenized_sentence = line[2].split(" ")
-		for word in tokenized_sentence:
-			if word not in wordCounts:
-				wordCounts[word] = 1
-				#print "adding " + word + " to dictionary"
-			else:
-				wordCounts[word] = wordCounts[word]+1
-				#print "incrementing " + word + "'s value by 1"
-
-	wc = sorted(wordCounts.items(),key=lambda (word, count): count,reverse=True)
-
 # -- START -- #
 seasonLineCount=0
 for episode in episodes:
@@ -211,6 +201,19 @@ for episode in episodes:
 print "Total Lines of Dialog: ", seasonLineCount
 
 # NLP Functions (coming soon)
+# Takes Lines Object Returns Counts of Unique Words Within
+# def count_words(episode_lines):
+# 	wordCounts = {}
+# 	# filter out stopwords
+# 	for line in lines:
+# 		tokenized_sentence = line[2].split(" ")
+# 		for word in tokenized_sentence:
+# 			if word not in wordCounts:
+# 				wordCounts[word] = 1
+# 			else:
+# 				wordCounts[word] = wordCounts[word]+1
+
+# 	wc = sorted(wordCounts.items(),key=lambda (word, count): count,reverse=True)
 # print "finding top 10 words..."
 # topWords = []
 # topWordsAndValues=[]
