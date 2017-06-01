@@ -7,6 +7,10 @@
 # Authored by Landon Robinson, 2017-05-31
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
 
+# Imports to Support Data Export
+import json
+import csv
+
 # Global Variables
 episodes = ["chapter1", "chapter2", "chapter3", "chapter4", "chapter5", "chapter6", "chapter7"]
 
@@ -187,18 +191,45 @@ def line_adjuster(lines):
 		# 	print line
 	return adjusted_lines
 
-# -- START -- #
+# Dump Data to Json
+def dump_to_json(name, lines):
+	with open ("data/json/"+name+"_data.json", "wb") as json_file:
+		json.dump(lines, json_file)
+
+# Dump Data to CSV
+def dump_to_delimited_file(name, lines, delimiter):
+	with open ("data/delimited/csv/"+name+"_data.csv", "wb") as write_file:
+		writer = csv.writer(write_file, delimiter=delimiter, quoting=csv.QUOTE_MINIMAL)
+
+		for row in lines:
+			writer.writerow(row)
+
+# Go!
 seasonLineCount=0
 for episode in episodes:
-	lines = parse_episode("episodes/"+ episode)
 
+	# Parse Episode
+	lines = parse_episode("episodes/"+ episode)
+	
+	# Clean the Data
 	clean_lines = line_adjuster(lines)
 
+	# Export the Data
 	for line in clean_lines:
 		print line, "\n"
 		seasonLineCount+=1
 
+	dump_to_json(episode, clean_lines)
+	dump_to_delimited_file(episode, clean_lines, ',')
+
 print "Total Lines of Dialog: ", seasonLineCount
+
+
+# thoughts
+# how long does each character talk on average per episode/full season
+# who has the most lines in the show?
+# who is the topic of discussion most in the show?
+# What places are mentioned?
 
 # NLP Functions (coming soon)
 # Takes Lines Object Returns Counts of Unique Words Within
